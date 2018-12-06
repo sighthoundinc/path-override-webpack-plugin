@@ -6,7 +6,7 @@ import * as webpack from "webpack";
 
 const WIN = /^win/.test(process.platform);
 
-const COMPONENT_ID_PATTERN = WIN ? /([^\\]+)$/ : /[^\/]*$/
+const COMPONENT_ID_PATTERN = WIN ? /([^\\]+)$/ : /[^\/]*$/;
 
 const getResolvedFile = (
     filePath: string,
@@ -40,17 +40,17 @@ const getResolvedFile = (
                 componentFileName = componentId + "." + extObj.ext;
                 componentFilePath = path.join(enclosingDirPath, componentFileName);
             }
-            fs.stat(componentFilePath, function (err, stats) {
+            fs.stat(componentFilePath, (err, stats) => {
                 if (err || !stats.isFile()) {
                     return tryToFindExtension(index + 1);
                 }
-                callback(componentFilePath)
+                callback(componentFilePath);
             });
         };
 
         tryToFindExtension(0);
     }
-}
+};
 
 export default class AliasOverridePlugin implements webpack.ResolvePlugin {
 
@@ -85,11 +85,11 @@ export default class AliasOverridePlugin implements webpack.ResolvePlugin {
                             data.request = file;
                         }
                         return callback(null, data);
-                    })
+                    });
                 } else {
                     return callback(null, data);
                 }
             });
         });
     }
-};
+}
