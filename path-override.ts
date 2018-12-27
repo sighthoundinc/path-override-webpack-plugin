@@ -52,7 +52,7 @@ const getResolvedFile = (
     }
 };
 
-export default class AliasOverridePlugin implements webpack.ResolvePlugin {
+export default class implements webpack.ResolvePlugin {
 
     constructor(
         private pathRegExp: RegExp,
