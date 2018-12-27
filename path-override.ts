@@ -58,7 +58,8 @@ export default class implements webpack.ResolvePlugin {
         private pathRegExp: RegExp,
         private pathReplacement: string,
         private exts: string[] = ["jsx", "js", "scss", "css"],
-        private reExcludeContexts: RegExp[] = []) {
+        private reExcludeContexts: RegExp[] = [],
+        private logFn: (msg: string) => void = () => { /* noop */ }) {
     }
 
     public apply(resolver: any) {
@@ -81,7 +82,7 @@ export default class implements webpack.ResolvePlugin {
                     const filePath = data.request.replace(pathRegExp, pathReplacement);
                     getResolvedFile(filePath, exts, (file) => {
                         if (typeof file === "string") {
-                            console.log(`[path-override] (${data.context}) ${data.request} => ${file}`);
+                            this.logFn(`[path-override] (${data.context}) ${data.request} => ${file}`);
                             data.request = file;
                         }
                         return callback(null, data);
