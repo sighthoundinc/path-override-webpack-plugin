@@ -4,7 +4,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as webpack from "webpack";
 
-const WIN = /^win/.test(process.platform);
+const WIN = process.platform.startsWith("win");
 
 const COMPONENT_ID_PATTERN = WIN ? /([^\\]+)$/ : /[^\/]*$/;
 
@@ -18,7 +18,7 @@ const getResolvedFile = (
 
     if (captured) {
         const componentId = captured[1];
-        const extObjs: Array<{ ext: string, file: boolean}> = exts.reduce((allExts: any[], ext: string) => {
+        const extObjs: Array<{ ext: string; file: boolean}> = exts.reduce((allExts: any[], ext: string) => {
             allExts.push({ ext, file: true }, { ext, file: false });
             return allExts;
         }, []);
@@ -33,7 +33,7 @@ const getResolvedFile = (
             if (extObj.file) {
                 componentFilePath = enclosingDirPath;
                 const extension = "." + extObj.ext;
-                if (componentFilePath.slice(extension.length * -1) !== extension) {
+                if (componentFilePath.endsWith(extension) === false) {
                     componentFilePath += extension;
                 }
             } else {
