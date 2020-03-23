@@ -52,7 +52,7 @@ const getResolvedFile = (
 
 export default class implements webpack.ResolvePlugin {
 
-    constructor(
+    public constructor(
         private pathRegExp: RegExp,
         private pathReplacement: string,
         private exts: string[] = ["jsx", "js", "scss", "css"],
