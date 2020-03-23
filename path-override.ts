@@ -16,7 +16,7 @@ const getResolvedFile = (
 
     if (captured) {
         const componentId = captured[1];
-        const extObjs: Array<{ ext: string; file: boolean}> = exts.reduce((allExts: any[], ext: string) => {
+        const extObjs: { ext: string; file: boolean}[] = exts.reduce((allExts: any[], ext: string) => {
             allExts.push({ ext, file: true }, { ext, file: false });
             return allExts;
         }, []);
@@ -31,7 +31,7 @@ const getResolvedFile = (
             if (extObj.file) {
                 componentFilePath = enclosingDirPath;
                 const extension = "." + extObj.ext;
-                if (componentFilePath.endsWith(extension) === false) {
+                if (!componentFilePath.endsWith(extension)) {
                     componentFilePath += extension;
                 }
             } else {
