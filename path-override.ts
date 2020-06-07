@@ -6,6 +6,11 @@ const WIN = process.platform.startsWith("win");
 
 const COMPONENT_ID_PATTERN = WIN ? /([^\\]+)$/ : /[^\/]*$/;
 
+interface IFileExtensionData {
+    ext: string;
+    file: boolean;
+}
+
 const getResolvedFile = (
     filePath: string,
     exts: string[],
@@ -16,7 +21,7 @@ const getResolvedFile = (
 
     if (captured) {
         const componentId = captured[1];
-        const extObjs: { ext: string; file: boolean}[] = exts.reduce((allExts: any[], ext: string) => {
+        const extObjs: IFileExtensionData[] = exts.reduce((allExts: IFileExtensionData[], ext: string) => {
             allExts.push({ ext, file: true }, { ext, file: false });
             return allExts;
         }, []);
@@ -57,7 +62,7 @@ export default class implements webpack.ResolvePlugin {
         private pathReplacement: string,
         private exts: string[] = ["jsx", "js", "scss", "css"],
         private reExcludeContexts: RegExp[] = [],
-        private logFn: (msg: string) => void = () => { /* noop */ }) {
+        private logFn: (msg: string) => void = (): void => { /* noop */ }) {
     }
 
     public apply(resolver: any) {
