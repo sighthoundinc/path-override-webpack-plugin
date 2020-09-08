@@ -4,7 +4,7 @@ import * as webpack from "webpack";
 
 const WIN = process.platform.startsWith("win");
 
-const COMPONENT_ID_PATTERN = WIN ? /([^\\]+)$/ : /[^\/]*$/;
+const COMPONENT_ID_PATTERN = WIN ? /([^\\]+)$/ : /[^/]*$/;
 
 interface IFileExtensionData {
     ext: string;
